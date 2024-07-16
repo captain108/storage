@@ -1,5 +1,5 @@
 // service-worker.js
-const CACHE_NAME = 'my-site-cache-v3';
+const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
   '/storage/',
   '/storage/index.html',
@@ -123,6 +123,7 @@ setInterval(() => {
           names.forEach(name => caches.delete(name));
         });
         self.clients.matchAll().then(clients => {
+          console.log('Refreshing clients...');
           clients.forEach(client => client.navigate(client.url));
         });
       } else {
@@ -132,4 +133,4 @@ setInterval(() => {
     .catch(error => {
       console.error('Error checking for updates:', error);
     });
-}, 4000); // Check every minute
+}, 60000); // Check every minute
