@@ -1,5 +1,5 @@
 // service-worker.js
-const CACHE_NAME = 'my-site-cache-v2';
+const CACHE_NAME = 'my-site-cache-v3';
 const urlsToCache = [
   '/storage/',
   '/storage/index.html',
