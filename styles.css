@@ -1,0 +1,10 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e48e8e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
