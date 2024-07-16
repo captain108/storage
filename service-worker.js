@@ -132,4 +132,4 @@ setInterval(() => {
     .catch(error => {
       console.error('Error checking for updates:', error);
     });
-}, 15000); // Check every minute
+}, 4000); // Check every minute
