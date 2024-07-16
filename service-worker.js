@@ -1,4 +1,3 @@
-// service-worker.js
 const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
   '/storage/',
@@ -107,6 +106,26 @@ self.addEventListener('activate', event => {
   );
 });
 
+// Function to update cache
+async function updateCache() {
+  const cache = await caches.open(CACHE_NAME);
+  await cache.addAll(urlsToCache);
+  console.log('Cache updated with new resources.');
+}
+
+// Function to delete old caches
+async function deleteOldCaches() {
+  const cacheNames = await caches.keys();
+  return Promise.all(
+    cacheNames.map(cacheName => {
+      if (cacheName !== CACHE_NAME) {
+        console.log('Deleting old cache:', cacheName);
+        return caches.delete(cacheName);
+      }
+    })
+  );
+}
+
 // Periodically check for updates
 setInterval(() => {
   console.log('Checking for updates...');
@@ -119,12 +138,11 @@ setInterval(() => {
       if (!storedVersion || storedVersion !== version) {
         console.log('New version detected. Updating...');
         await setVersion(db, version);
-        caches.keys().then(names => {
-          names.forEach(name => caches.delete(name));
-        });
+        await updateCache();
+        await deleteOldCaches();
         self.clients.matchAll().then(clients => {
           console.log('Refreshing clients...');
-          clients.forEach(client => client.reload());
+          clients.forEach(client => client.navigate(client.url));
         });
       } else {
         console.log('No new version detected.');
