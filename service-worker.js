@@ -124,7 +124,7 @@ setInterval(() => {
         });
         self.clients.matchAll().then(clients => {
           console.log('Refreshing clients...');
-          clients.forEach(client => client.navigate(client.url));
+          clients.forEach(client => client.reload());
         });
       } else {
         console.log('No new version detected.');
